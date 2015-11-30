@@ -1,0 +1,13 @@
+<html>
+<head>
+</head>
+<body>
+<h1>My First Php Web Page</h1>
+
+<form action="insertData.php" method="post">
+First Name<input value="firstname" name="firstname" type="text" >
+Last Name<input value="lastname" name="lastname" type="text" >
+<input type="Submit">
+</form>
+</body>
+</html> l>
