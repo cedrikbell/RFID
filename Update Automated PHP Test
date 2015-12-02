@@ -1,0 +1,40 @@
+<?php
+class MySqlGuestbookTest extends PHPUnit_Extensions_Database_TestCase
+{
+    /**
+     * @return PHPUnit_Extensions_Database_DB_IDatabaseConnection
+     */
+    public function getConnection()
+    {
+        $database = 'rfid_database';
+        $user = 'root';
+        $password = 'sqldba';
+        $pdo = new PDO('mysql:host', $user, $password);
+		//.. sets a new pdo
+        return $this->createDefaultDBConnection($pdo, $database);
+		//.. returns the default databse connection
+    }
+
+    //...public function testUser()
+    //...{
+       //... $tableNames = array('testuser');
+        // ...
+
+    public function testAddEntry()
+    {
+        $testuser = array('testuser');
+		//.. creates a new array named testuser
+        $testuser->addEntry("firstname", "lastname");
+		//.. adds a new entry to the testuser array
+        $queryTable = $this->getConnection()->createQueryTable(
+            'testuser', 'SELECT * FROM testuser'
+			//.. connects to the testuser query and retrives all data
+        );
+        $expectedTable = $this->getConnection()->createDataSet($tableNames);
+                              ->getTable("testuser");
+		//.. sets the expected table as the new array with the added entires
+        $this->assertTablesEqual($expectedTable, $queryTable);
+		//.. asserts that the query table is the same as the new array 
+    }
+}
+?>
