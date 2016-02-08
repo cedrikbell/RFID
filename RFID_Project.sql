@@ -21,7 +21,7 @@ DROP TABLE IF EXISTS `Makes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE Makes (
-    make_id INT(2)  NOT NULL auto_increment,
+    make_id INT(3)  NOT NULL auto_increment,
     makeName VARCHAR(20) NOT NULL,
     created_at DATE DEFAULT NULL,
     updated_at DATE DEFAULT NULL,
@@ -49,7 +49,7 @@ DROP TABLE IF EXISTS `Models`;
 CREATE TABLE Models (
     model_id INT(4) COLLATE UTF8_UNICODE_CI NOT NULL auto_increment,
     model_Name VARCHAR(30) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
-    make_id INT(2) COLLATE UTF8_UNICODE_CI DEFAULT NULL ,
+    make_id INT(3) COLLATE UTF8_UNICODE_CI DEFAULT NULL ,
     nom_id INT(2) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
     created_at DATE DEFAULT NULL,
     updated_at DATE DEFAULT NULL,
