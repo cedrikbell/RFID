@@ -11,8 +11,8 @@
 
 
 ### Create Database
-DROP DATABASE IF EXISTS RFID_Database;
-CREATE DATABASE RFID_Database;
+#DROP DATABASE IF EXISTS RFID_Database;
+#CREATE DATABASE RFID_Database;
 USE RFID_Database;
 
 ### Create Primary Tables
@@ -21,8 +21,8 @@ DROP TABLE IF EXISTS `Makes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE Makes (
-    make_id char(2) COLLATE UTF8_UNICODE_CI NOT NULL,
-    makeName VARCHAR(20) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
+    make_id INT(3)  NOT NULL auto_increment,
+    makeName VARCHAR(20) NOT NULL,
     created_at DATE DEFAULT NULL,
     updated_at DATE DEFAULT NULL,
     PRIMARY KEY (make_id)
@@ -34,7 +34,7 @@ DROP TABLE IF EXISTS `nomenclature`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE nomenclature (
-    nomenclature_id char(2) COLLATE UTF8_UNICODE_CI NOT NULL,
+    nomenclature_id INT(2) COLLATE UTF8_UNICODE_CI NOT NULL auto_increment,
     nomenclature_Name VARCHAR(20) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
     created_at DATE DEFAULT NULL,
     updated_at DATE DEFAULT NULL,
@@ -47,10 +47,10 @@ DROP TABLE IF EXISTS `Models`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE Models (
-    model_id char(4) COLLATE UTF8_UNICODE_CI NOT NULL,
+    model_id INT(4) COLLATE UTF8_UNICODE_CI NOT NULL auto_increment,
     model_Name VARCHAR(30) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
-    make_id CHAR(2) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
-    nom_id CHAR(2) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
+    make_id INT(3) COLLATE UTF8_UNICODE_CI DEFAULT NULL ,
+    nom_id INT(2) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
     created_at DATE DEFAULT NULL,
     updated_at DATE DEFAULT NULL,
     photo_file_name VARCHAR(30),
@@ -76,7 +76,7 @@ DROP TABLE IF EXISTS `Locations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE Locations (
-    location_id char(2) COLLATE UTF8_UNICODE_CI NOT NULL,
+    location_id INT(2) COLLATE UTF8_UNICODE_CI NOT NULL auto_increment,
     roomNumber VARCHAR(4) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
     created_at DATE DEFAULT NULL,
     updated_at DATE DEFAULT NULL,
@@ -88,7 +88,7 @@ DROP TABLE IF EXISTS `Roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE Roles (
-    role_id char(1) COLLATE UTF8_UNICODE_CI NOT NULL,
+    role_id INT(2) COLLATE UTF8_UNICODE_CI NOT NULL auto_increment,
     roleName VARCHAR(20) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
     roleDescription VARCHAR(255) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
     created_at DATE DEFAULT NULL,
@@ -101,13 +101,13 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE users (
-    user_id VARCHAR(50) COLLATE UTF8_UNICODE_CI NOT NULL,
-    lastName VARCHAR(20) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
-    firstNAme VARCHAR(20) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
+    lastName VARCHAR(20) COLLATE UTF8_UNICODE_CI NOT NULL,
+    firstNAme VARCHAR(20) COLLATE UTF8_UNICODE_CI NOT NULL,
+    email_address VARCHAR(50) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
     payGrade VARCHAR(4) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
-    created_at DATE DEFAULT NULL,
-    updated_at DATE DEFAULT NULL,
-    PRIMARY KEY (user_id)
+    created_at DATE NOT NULL,
+    updated_at DATE NOT NULL,
+    PRIMARY KEY (email_address)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8 COLLATE = UTF8_UNICODE_CI;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -116,13 +116,13 @@ DROP TABLE IF EXISTS `UsersHaveRoles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE UsersHaveRoles (
-	user_id VARCHAR(50) COLLATE UTF8_UNICODE_CI NOT NULL,
-    role_id char(1) COLLATE UTF8_UNICODE_CI NOT NULL,
+	email_address VARCHAR(50) COLLATE UTF8_UNICODE_CI NOT NULL,
+    role_id INT(2) COLLATE UTF8_UNICODE_CI NOT NULL,
     created_at DATE DEFAULT NULL,
     updated_at DATE DEFAULT NULL,
-    INDEX user_id (user_id),
-    Foreign Key (user_id)
-		references users(user_id)
+    INDEX email_address (email_address),
+    Foreign Key (email_address)
+		references users(email_address)
 		ON DELETE CASCADE,
     INDEX role_id (role_id),
     Foreign Key (role_id)
@@ -137,7 +137,7 @@ DROP TABLE IF EXISTS `HRHolders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE HRHolders (
-    hrholder_id char(2) COLLATE UTF8_UNICODE_CI NOT NULL,
+    hrholder_id INT(2) COLLATE UTF8_UNICODE_CI NOT NULL auto_increment,
     created_at DATE DEFAULT NULL,
     updated_at DATE DEFAULT NULL,
     user_id VARCHAR(50) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
@@ -153,17 +153,22 @@ DROP TABLE IF EXISTS `items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE items (
-    items_id char(4) COLLATE UTF8_UNICODE_CI NOT NULL,
+    items_id INT(4) COLLATE UTF8_UNICODE_CI NOT NULL auto_increment,
     rfid CHAR(24) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
+    model_id INT(4) COLLATE UTF8_UNICODE_CI NOT NULL,
     dateAcquired DATE DEFAULT NULL,
-    location_id char(2) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
+    location_id INT(2) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
     serialNum VARCHAR(24) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
     comments VARCHAR(34) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
     price INT DEFAULT NULL,
     pbhrNumber VARCHAR(8) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
-    hrholder_id char(2) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
+    hrholder_id INT(2) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
     accountedFor CHAR(1) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
-    alias CHAR(10) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
+    alias CHAR(10) COLLATE UTF8_UNICODE_CI DEFAULT NULL, 
+    INDEX model_id (model_id),
+    Foreign Key (model_id)
+		references Models(model_id)
+		ON DELETE CASCADE,
     INDEX location_id (location_id),
     Foreign Key (location_id)
 		references Locations(location_id)
@@ -175,5 +180,4 @@ CREATE TABLE items (
 	PRIMARY KEY (items_id)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8 COLLATE = UTF8_UNICODE_CI;
 /*!40101 SET character_set_client = @saved_cs_client */;
-	
 	
