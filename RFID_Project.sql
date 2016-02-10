@@ -103,11 +103,11 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE users (
     lastName VARCHAR(20) COLLATE UTF8_UNICODE_CI NOT NULL,
     firstNAme VARCHAR(20) COLLATE UTF8_UNICODE_CI NOT NULL,
-    email_address VARCHAR(50) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
-    payGrade VARCHAR(4) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
+    user_id VARCHAR(50) COLLATE UTF8_UNICODE_CI NOT NULL,
+    payGrade VARCHAR(4) COLLATE UTF8_UNICODE_CI NOT NULL,
     created_at DATE NOT NULL,
     updated_at DATE NOT NULL,
-    PRIMARY KEY (email_address)
+    PRIMARY KEY (user_id)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8 COLLATE = UTF8_UNICODE_CI;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -116,13 +116,13 @@ DROP TABLE IF EXISTS `UsersHaveRoles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE UsersHaveRoles (
-	email_address VARCHAR(50) COLLATE UTF8_UNICODE_CI NOT NULL,
+	user_id VARCHAR(50) COLLATE UTF8_UNICODE_CI NOT NULL,
     role_id INT(2) COLLATE UTF8_UNICODE_CI NOT NULL,
     created_at DATE DEFAULT NULL,
     updated_at DATE DEFAULT NULL,
-    INDEX email_address (email_address),
-    Foreign Key (email_address)
-		references users(email_address)
+    INDEX user_id (user_id),
+    Foreign Key (user_id)
+		references users(user_id)
 		ON DELETE CASCADE,
     INDEX role_id (role_id),
     Foreign Key (role_id)
