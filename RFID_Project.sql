@@ -11,8 +11,8 @@
 
 
 ### Create Database
-#DROP DATABASE IF EXISTS RFID_Database;
-#CREATE DATABASE RFID_Database;
+DROP DATABASE IF EXISTS RFID_Database;
+CREATE DATABASE RFID_Database;
 USE RFID_Database;
 
 ### Create Primary Tables
@@ -25,6 +25,7 @@ CREATE TABLE Makes (
     makeName VARCHAR(20) NOT NULL,
     created_at DATE DEFAULT NULL,
     updated_at DATE DEFAULT NULL,
+    delete_Boolean tinyint default NULL,
     PRIMARY KEY (make_id)
 )  ENGINE=MYISAM DEFAULT CHARSET=UTF8 COLLATE = UTF8_UNICODE_CI;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -38,6 +39,7 @@ CREATE TABLE nomenclature (
     nomenclature_Name VARCHAR(20) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
     created_at DATE DEFAULT NULL,
     updated_at DATE DEFAULT NULL,
+    delete_Boolean tinyint default NULL,
     PRIMARY KEY (nomenclature_id)
 )  ENGINE=MYISAM DEFAULT CHARSET=UTF8 COLLATE = UTF8_UNICODE_CI;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -58,6 +60,7 @@ CREATE TABLE Models (
     photo_file_size INT DEFAULT NULL,
     photo_updated_at DATE DEFAULT NULL,
     seriveLife INT DEFAULT NULL,
+    delete_Boolean tinyint default NULL,
 	maintainence_type VARCHAR(10) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
     PRIMARY KEY (model_id),
     INDEX make_id (make_id),
@@ -80,6 +83,7 @@ CREATE TABLE Locations (
     roomNumber VARCHAR(4) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
     created_at DATE DEFAULT NULL,
     updated_at DATE DEFAULT NULL,
+    delete_Boolean tinyint default NULL,
     PRIMARY KEY (location_id)
 )  ENGINE=MYISAM DEFAULT CHARSET=UTF8 COLLATE = UTF8_UNICODE_CI;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -93,6 +97,7 @@ CREATE TABLE Roles (
     roleDescription VARCHAR(255) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
     created_at DATE DEFAULT NULL,
     updated_at DATE DEFAULT NULL,
+    delete_Boolean tinyint default NULL,
     PRIMARY KEY (role_id)
 )  ENGINE=MYISAM DEFAULT CHARSET=UTF8 COLLATE = UTF8_UNICODE_CI;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -101,12 +106,14 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE users (
+	user_id INT(4) COLLATE UTF8_UNICODE_CI NOT NULL auto_increment,
+    usernameName VARCHAR(40) COLLATE UTF8_UNICODE_CI NOT NULL,
     lastName VARCHAR(20) COLLATE UTF8_UNICODE_CI NOT NULL,
     firstNAme VARCHAR(20) COLLATE UTF8_UNICODE_CI NOT NULL,
-    user_id VARCHAR(50) COLLATE UTF8_UNICODE_CI NOT NULL,
     payGrade VARCHAR(4) COLLATE UTF8_UNICODE_CI NOT NULL,
-    created_at DATE NOT NULL,
-    updated_at DATE NOT NULL,
+    pass VARCHAR(40) COLLATE UTF8_UNICODE_CI NOT NULL,
+    user_Type VARCHAR(20) COLLATE UTF8_UNICODE_CI NOT NULL,
+    delete_Boolean tinyint default NULL,
     PRIMARY KEY (user_id)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8 COLLATE = UTF8_UNICODE_CI;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -116,19 +123,20 @@ DROP TABLE IF EXISTS `UsersHaveRoles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE UsersHaveRoles (
-	user_id VARCHAR(50) COLLATE UTF8_UNICODE_CI NOT NULL,
+	user_Type VARCHAR(20) NOT NULL,
     role_id INT(2) COLLATE UTF8_UNICODE_CI NOT NULL,
     created_at DATE DEFAULT NULL,
     updated_at DATE DEFAULT NULL,
-    INDEX user_id (user_id),
-    Foreign Key (user_id)
-		references users(user_id)
+    delete_Boolean tinyint default NULL,
+    INDEX user_Type (user_Type),
+    Foreign Key (user_Type)
+		references users(user_Type)
 		ON DELETE CASCADE,
     INDEX role_id (role_id),
     Foreign Key (role_id)
 		references Roles(role_id)
 		ON DELETE CASCADE,
-    PRIMARY KEY (user_id , role_id)
+    PRIMARY KEY (user_Type , role_id)
 )  ENGINE=MYISAM DEFAULT CHARSET=UTF8 COLLATE = UTF8_UNICODE_CI;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -140,7 +148,8 @@ CREATE TABLE HRHolders (
     hrholder_id INT(2) COLLATE UTF8_UNICODE_CI NOT NULL auto_increment,
     created_at DATE DEFAULT NULL,
     updated_at DATE DEFAULT NULL,
-    user_id VARCHAR(50) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
+    user_id INT(4) COLLATE UTF8_UNICODE_CI NOT NULL,
+    delete_Boolean tinyint default NULL,
     INDEX user_id (user_id),
     Foreign Key (user_id)
 		references users(user_id)
@@ -164,7 +173,8 @@ CREATE TABLE items (
     pbhrNumber VARCHAR(8) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
     hrholder_id INT(2) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
     accountedFor CHAR(1) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
-    alias CHAR(10) COLLATE UTF8_UNICODE_CI DEFAULT NULL, 
+    alias CHAR(10) COLLATE UTF8_UNICODE_CI DEFAULT NULL,
+    delete_Boolean tinyint default NULL,
     INDEX model_id (model_id),
     Foreign Key (model_id)
 		references Models(model_id)
