@@ -18,7 +18,7 @@ class Header {
 		<li><a href=#>Home</a></li>
 		<li><a href=#>Hand Receipts</a></li>
 		<li><a href=#>Search</a></li>
-		<li><a href=#>Makes and Models</a></li>
+		<li><a href=makeAndModelPage.php>Makes and Models</a></li>
 		<li><a href=#>Latest Update</a></li>
 		</ul>");
 	}

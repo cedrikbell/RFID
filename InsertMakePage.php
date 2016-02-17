@@ -6,6 +6,9 @@
 	$rC->printHTMLHEADER();
 	$make = $rC->getNewMake();
 	$make->generateNewMakeForm();
+	$make->generateSelectMakeForm();
+	$make->generateUpdateMakeForm();
+	$make->generateDeleteMakeForm();
 	$rC->printHTMLFOOTER();
 	
 ?>

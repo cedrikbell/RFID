@@ -1,8 +1,8 @@
 <?php 
 	include 'RfidController.php';
 
-	$makeName = $_POST['makeName'];	
+	$modelName = $_POST['modelName'];	
 	$rC = new RfidController();
 	//$nM = Make($makes);
-	$rC->insertMake($makeName);
+	$rC->selectModel($modelName);
 ?>
