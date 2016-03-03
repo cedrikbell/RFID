@@ -6,28 +6,28 @@ class Make{
 		print(" <br><br><br><form action = addNewMake.php method=post>
 			New Make: <input name=makeName type=text ><br>
 				  <input value=Submit Data type=Submit>
-		</form></body></html>
+		</form>
 		");
 	}
 	public function generateSelectMakeForm(){
 		print(" <br><br><br><form action = selMake.php method=post>
 			Select Make: <input name=makeName type=text ><br>
 				  <input value=Submit Data type=Submit>
-		</form></body></html>
+		</form>
 		");
 	}
 	public function generateUpdateMakeForm(){
 		print(" <br><br><br><form action = upMake.php method=post>
 			Update Make: <input name=makeName type=text ><br>
 				  <input value=Submit Data type=Submit>
-		</form></body></html>
+		</form>
 		");
 	}
 	public function generateDeleteMakeForm(){
 		print(" <br><br><br><form action = delMake.php method=post>
 			Delete Make: <input name=makeName type=text ><br>
 				  <input value=Submit Data type=Submit>
-		</form></body></html>
+		</form>
 		");
 	}
 
